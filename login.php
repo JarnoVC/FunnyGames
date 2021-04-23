@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_stmt_bind_param($stmt, "s", $param_username);
             
             // Set parameters
-            $param_username = mysql_real_escape_string($username);
+            $param_username = $username;
             
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {

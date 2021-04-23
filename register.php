@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("s", $param_username);
             
             // parameters zetten
-            $param_username = mysqli_real_escape_string(trim($_POST["username"]));
+            $param_username = trim($_POST["username"]);
             
             // Statement uitvoeren
             if ($stmt->execute()) {
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("s", $param_email);
             
             // parameters zetten
-            $param_email = mysqli_real_escape_string(trim($_POST["email"]));
+            $param_email = trim($_POST["email"]);
             
             // Statement uitvoeren
             if ($stmt->execute()) {
@@ -110,9 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sss", $param_email, $param_username, $param_password);
             
             // parameters zetten
-            $param_email = mysqli_real_escape_string($email);
-            $param_username = mysqli_real_escape_string($username);
-            $param_password = mysqli_real_escape_string(password_hash($password, PASSWORD_BCRYPT, $options)); // password hashen
+            $param_email = $email;
+            $param_username = $username;
+            $param_password = password_hash($password, PASSWORD_BCRYPT, $options); // password hashen
             
             // SQL statement uitvoeren
             if ($stmt->execute()) {
