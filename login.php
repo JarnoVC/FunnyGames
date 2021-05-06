@@ -4,7 +4,7 @@
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__. "/classes/Database.php");
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('location: welcome.php');
+    header('location: index.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ if (!empty($_POST)) {
             $errorPassword = "Please fill in your password";
         } else {
             if ($user->login($_POST['email'], $_POST['password'])) {
-                $id = User::getIdByEmail($user->getEmail());
+                $id = User::getIDFromEmail($_POST['email']);
                 $user->startSession($id);
                 /*echo "succes";
                 $_SESSION['loggedin'] = true;

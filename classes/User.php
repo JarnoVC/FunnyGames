@@ -214,7 +214,7 @@ class User{
     }
     /*functie om de ID van een gebruiker te krijgen -> gebruiken
     om de correcte posts weer te geven voor de gebruiker*/
-    public static function getIdByEmail($email){
+    public static function getIDFromEmail($email){
         $conn = Db::Connection();
         $statement = $conn->prepare("SELECT id FROM user WHERE email = :email");
         $statement->bindValue(':email', $email);
