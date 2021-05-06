@@ -1,34 +1,46 @@
 
 <?php
     
-    include_once(__DIR__ . "/classes/User.php");
-    include_once(__DIR__. "/classes/Database.php");
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-        header('location: index.php');
-        exit;
-    }
-    
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__. "/classes/Database.php");
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    header('location: welcome.php');
+    exit;
+}
 
-    if (!empty($_POST)){
-        try{
-            
-            
-            $user = new User();
-            $user->setEmail($_POST['email']);
-            $user->setPassword($_POST['password']);
-            if($user->login()) {
+
+if (!empty($_POST)) {
+    
+    try {
+        
+        /*Nieuwe user aanmaken*/
+        $user = new User();
+
+        /*controleren of de invulvelden van email en paswoord
+        niet leeg zijn alvoren toegang tot site te geven*/
+        if (empty($_POST['email'])) {
+            $errorMail = "Please fill in your email";
+        } elseif (empty($_POST['password'])) {
+            $errorPassword = "Please fill in your password";
+        } else {
+            if ($user->login($_POST['email'], $_POST['password'])) {
                 $id = User::getIdByEmail($user->getEmail());
                 $user->startSession($id);
-                
-            }else{
-                echo "pech";
+                /*echo "succes";
+                $_SESSION['loggedin'] = true;
+                header('location: welcome.php');*/
+            } else {
+                $errorMail = $errorPassword = "Wrong email or password";
             }
-            
-        } catch (Throwable $th) {
-            $error = $th->getMessage();
         }
         
+        
+        
+    } catch (Throwable $th) {
+        $error = $th->getMessage();
     }
+    
+}
 
 
 
@@ -59,13 +71,17 @@
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" name="email" class="form-control" placeholder="email">
-                <span class="invalid-feedback"><?php echo $error; ?></span>
+                <input type="text" name="email" class="form-control <?php echo (!empty($errorMail)) ? 'is-invalid' : ''; ?>" placeholder="email">
+                <?php if (isset($errorMail)) : ?>
+                    <span class="invalid-feedback"><?php echo $errorMail; ?></span>
+                <?php endif; ?>
             </div>    
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="password">
-                <span class="invalid-feedback"><?php echo $error; ?></span>
+                <input type="password" name="password" class="form-control <?php echo (!empty($errorPassword)) ? 'is-invalid' : ''; ?>" placeholder="password">
+                <?php if (isset($errorPassword)) : ?>
+                    <span class="invalid-feedback"><?php echo $errorPassword; ?></span>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
