@@ -39,7 +39,7 @@ if (!empty($_POST)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload post</title>
-    <link rel="icon" href="img/favicon.svg">
+    <link rel="icon" href="illustrations/favicon.svg">
     <link rel="stylesheet" media="screen" href="style/add.css">
 </head>
 <script type="text/javascript">
