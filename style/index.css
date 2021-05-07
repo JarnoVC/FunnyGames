@@ -1,0 +1,90 @@
+@font-face {
+    font-family: "first-job";
+    src: url(../fonts/FirstJob-X8rP.ttf);
+}
+
+body {
+    color: white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.one_post {
+    margin-bottom: 15vw;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 93vw;
+    height: 93vw;
+}
+
+p {
+    width: 93vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.hashtag {
+    width: 93vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Montserrat', sans-serif;
+    color: #D9A321;
+}
+
+.comment_field {
+    width: 3vw;
+    resize: none;
+}
+
+@media screen and (min-width: 1000px) {
+    img {
+        width: 25vw;
+        height: 25vw;
+        object-fit: cover;
+        display: initial;
+        position: relative;
+        left: 22vw;
+        top: 5vw;
+        border-radius: 5px;
+    }
+    p {
+        position: relative;
+        top: 5vw;
+        left: 22vw;
+        width: 98vw;
+    }
+    .hashtag {
+        position: relative;
+        top: 4.5vw;
+        left: 22vw;
+        width: 98vw;
+    }
+    .date {
+        font-size: 0.7vw;
+    }
+    .one_post {
+        margin-bottom: 8vw;
+    }
+    .comment_field {
+        width: 26vw;
+        resize: none;
+        float: right;
+        position: relative;
+        top: 0vw;
+        left: -21vw;
+        padding: 1vw 0vw 1vw 2vw;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.36);
+        border: none;
+    }
+    .comment_field::placeholder {
+        color: rgba(255, 255, 255, 0.496);
+    }
+}

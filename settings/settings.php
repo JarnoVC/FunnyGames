@@ -3,10 +3,8 @@
 const SETTINGS = [
     "db" => [
         "user"      => "root",
-        "password"  => "",
+        "password"  => "root",
         "host"      => "localhost",
-        "name"      => "funnygames"
+        "name"      => "funnygames1"
     ]
-    ];
-
-  
+];

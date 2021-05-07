@@ -1,0 +1,131 @@
+@font-face {
+    font-family: "first-job";
+    src: url(../fonts/FirstJob-X8rP.ttf);
+}
+
+.btn_add_pic {
+    margin-top: 4vw;
+    margin-bottom: 15vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    cursor: pointer;
+}
+
+.textarea {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    margin-top: 5vw;
+}
+
+.caption_text {
+    width: 93vw;
+    height: 20vw;
+}
+
+.hashtag_text {
+    width: 93vw;
+    height: 9vw;
+}
+
+.btn_post {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vw;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 3vw 10vw;
+    border-radius: 5px;
+    font-family: "first-job";
+    font-size: 4vw;
+}
+
+.img_preview {
+    width: 93vw;
+    height: 93vw;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 12vw;
+    background-color: #A1A9C0;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 1000px) {
+    .img_preview {
+        width: 25vw;
+        height: 25vw;
+        background-color: #A1A9C0;
+        border-radius: 5px;
+        position: relative;
+        left: -20vw;
+        top: -7vw;
+    }
+    #uploadImage.btn_add_pic {
+        margin-left: 17vw;
+        margin-top: -5vw;
+    }
+    .textarea {
+        position: absolute;
+    }
+    .caption_text {
+        width: 32vw;
+        height: 14vw;
+        top: 5vw;
+        left: 46vw;
+        padding: 2vw;
+        font-size: 1.3em;
+        resize: none;
+    }
+    .hashtag_text {
+        width: 32vw;
+        height: 1vw;
+        left: 46vw;
+        top: 26vw;
+        padding: 1.5vw 2vw 1.5vw 2vw;
+        font-size: 1.3em;
+        resize: none;
+    }
+    .btn_add_pic {
+        margin-bottom: 3vw;
+    }
+    .btn_post {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2vw;
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+        padding: 0.5vw 3vw;
+        border-radius: 5px;
+        font-family: "first-job";
+        font-size: 2vw;
+        font-size: 2em;
+        cursor: pointer;
+    }
+    .btn_post:hover {
+        color: #26376D;
+        background-color: white;
+    }
+    .error {
+        font-family: 'Montserrat', sans-serif;
+        position: absolute;
+        font-size: 80%;
+        color: #dc3545;
+    }
+    .error_desc {
+        left: 46vw;
+        top: 28.5vw;
+    }
+    .error_image {
+        left: 17.5vw;
+        top: 40vw;
+    }
+}

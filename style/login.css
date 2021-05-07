@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "first-job";
+    src: url(../fonts/FirstJob-X8rP.ttf);
+}
+
+body {
+    background-image: linear-gradient(to right, #012961, #171932, #2E2A68);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+    background-image: url(../illustrations/funnylogo_vertical.svg);
+    background-repeat: no-repeat;
+    width: 13vw;
+    height: 8vw;
+    display: block;
+    margin: auto;
+    margin-top: 2vw;
+    margin-bottom: 5vw;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+}
+
+p {
+    text-align: center;
+    font-size: 1.3em;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-family: "first-job";
+    font-size: 1.3em;
+    margin-left: 1vw;
+}
+
+a:hover {
+    color: white;
+}
+
+.form-control {
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1.3vw 1vw;
+    margin-top: 1.5vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    font-size: 1.3em;
+    border: none;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.496);
+}
+
+.invalid-feedback {
+    text-align: center;
+}
+
+.alert {
+    width: 25%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-primary {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vw;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.5vw 3vw;
+    border-radius: 5px;
+    font-family: "first-job";
+    font-size: 2vw;
+    font-size: 2em;
+}
+
+.btn-primary:hover {
+    color: #26376D;
+    background-color: white;
+}
+
+.text_bottom {
+    position: fixed;
+    text-align: center;
+    bottom: 2vw;
+    width: 100%;
+}
