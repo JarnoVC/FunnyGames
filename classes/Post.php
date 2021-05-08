@@ -2,6 +2,8 @@
 
 include_once(__DIR__ . "/Database.php");
 
+session_start();
+
 class Post
 {
     private $image;
@@ -166,16 +168,18 @@ class Post
         $conn = DB::Connection();
 
 
-        $statement = $conn->prepare('INSERT INTO post (image, description) values (:image, :description)');
+        $statement = $conn->prepare('INSERT INTO post (image, description, user_id) values (:image, :description, :user_id)');
 
 
         $image = $this->getImage();
         $description = $this->getDescription();
+        $user_id = ($_SESSION['id']);
 
 
 
         $statement->bindValue(":image", $image);
         $statement->bindValue(":description", $description);
+        $statement->bindValue(":user_id", $user_id);
 
 
         $result = $statement->execute();

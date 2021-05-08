@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,13 +30,14 @@
 
     <?php foreach (array_reverse($post) as $post) : ?>
 
-        <?php 
-        $amount_post++ ;
+        <?php
+        $amount_post++;
         if ($amount_post > 20) {
             break;
         }
         ?>
         <div class='one_post'>
+            <?php echo ($_SESSION['id']); ?>
             <img src="<?php echo 'posts/' . $post['image'] ?>">
             <p> <?php echo $post['description']; ?></p>
             <a href="" class="hashtag"><?php echo "#" . $post['title']; ?></a>
