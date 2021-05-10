@@ -229,8 +229,6 @@ class User{
         header('location: index.php');
     }
 
-    class User {
-
 
     public function getUsers() {
         $conn = DB::Connection();
