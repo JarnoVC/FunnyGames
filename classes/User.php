@@ -229,7 +229,16 @@ class User{
         header('location: index.php');
     }
 
-    
+    class User {
+
+
+    public function getUsers() {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('SELECT * FROM user');
+        $statement->execute();
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
 
     
 }
