@@ -1,6 +1,7 @@
 <?php
 
 include_once(__DIR__ . "/Database.php");
+include_once(__DIR__ . "/classes/User.php");
 
 session_start();
 
@@ -11,7 +12,6 @@ class Post
     private $date;
     private $user_id;
     private $hashtag;
-    private $hashtag_id;
 
 
 
@@ -31,6 +31,9 @@ class Post
      */
     public function setImage($image)
     {
+        if (empty($image)) {
+            throw new Exception("Choose your image!");
+        }
 
         $this->image = $image;
 
@@ -116,51 +119,25 @@ class Post
      */
     public function setHashtag($hashtag)
     {
+
         $this->hashtag = $hashtag;
 
         return $this;
     }
-    public function getPost_id()
+
+    public function post_hash()
     {
-        return $this->post_id;
+        $conn = DB::Connection();
+        $statement = $conn->prepare('INSERT INTO post_hashtag (hashtag_id, post_id) values (:hashtag_id, :post_id)');
+
+        $hashtag_id = $conn->prepare("SELECT hashtag.id, hashtag.title from hashtag inner join post_hashtag on post_hashtag.hashtag_id=hashtag_id");
+        $post_id = $conn->prepare("SELECT * post from post inner join post_hashtag on post_hashtag.post_id=post_id");
+
+        $statement->bindValue(":hashtag_id", $hashtag_id);
+        $statement->bindValue(":post_id", $post_id);
+        $result = $statement->execute();
+        return $result;
     }
-
-    /**
-     * Set the value of post_id
-     *
-     * @return  self
-     */
-    public function setPost_id($post_id)
-    {
-        $this->post_id = $post_id;
-
-        return $this;
-    }
-    /**
-     * Get the value of post_id
-     */
-
-    /**
-     * Get the value of hashtag_id
-     */
-    public function getHashtag_id()
-    {
-        return $this->hashtag_id;
-    }
-
-    /**
-     * Set the value of hashtag_id
-     *
-     * @return  self
-     */
-    public function setHashtag_id($hashtag_id)
-    {
-        $this->hashtag_id = $hashtag_id;
-
-        return $this;
-    }
-
-
 
 
     public function save()
@@ -173,13 +150,12 @@ class Post
 
         $image = $this->getImage();
         $description = $this->getDescription();
-        $user_id = ($_SESSION['id']);
 
 
 
         $statement->bindValue(":image", $image);
         $statement->bindValue(":description", $description);
-        $statement->bindValue(":user_id", $user_id);
+        $statement->bindValue(":user_id", $_SESSION['id']);
 
 
         $result = $statement->execute();
@@ -199,36 +175,12 @@ class Post
         return $result;
     }
 
-    /*public function post_hashtag()
-    {
-        $conn = DB::Connection();
-        $statement = $conn->prepare('INSERT INTO post_hashtag (post_id, hashtag_id) values (:post_id, :hashtag_id)');
-
-        $post_id = $this->getPost_id();
-        $hashtag_id = $this->getHashtag_id();
-
-        $statement->bindValue(":post_id", $post_id);
-        $statement->bindValue(":hashtag_id", $hashtag_id);
-
-        $result = $statement->execute();
-        return $result;
-    }*/
-
-
 
     public static function getAll()
     {
         $conn = DB::Connection();
 
         $statement = $conn->prepare("SELECT * from post");
-
-
-        /* $statement = $conn->prepare("SELECT post.id, post.image, post.description, post.date, hashtag.title 
-        from post
-        inner join post_hashtag on (post.id = post_hashtag.post_id)
-        inner join hashtag on (hashtag.id = post_hashtag.hashtag_id)
-        ");*/
-
 
         $statement->execute();
         $post = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -237,14 +189,12 @@ class Post
 
 
 
-    /* public static function getHash()
+    public static function getHash()
     {
         $conn = DB::Connection();
-
         $statement = $conn->prepare("SELECT * from hashtag");
-
         $statement->execute();
-        $post = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $post;
-    }*/
+        $hash = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $hash;
+    }
 }

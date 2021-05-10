@@ -1,5 +1,17 @@
 <?php
+include_once(__DIR__ . "/classes/Post.php");
+include_once(__DIR__ . "/classes/User.php");
 session_start();
+
+include 'header.inc.php';
+
+$post = Post::getAll();
+
+
+
+$amount_post = 0;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -15,18 +27,6 @@ session_start();
 </head>
 
 <body>
-    <?php
-
-    include_once(__DIR__ . "/classes/Post.php");
-
-    include 'header.inc.php';
-
-    $post = Post::getAll();
-
-    $amount_post = 0;
-
-    ?>
-
 
     <?php foreach (array_reverse($post) as $post) : ?>
 
@@ -37,10 +37,11 @@ session_start();
         }
         ?>
         <div class='one_post'>
-            <?php echo ($_SESSION['id']); ?>
             <img src="<?php echo 'posts/' . $post['image'] ?>">
             <p> <?php echo $post['description']; ?></p>
-            <a href="" class="hashtag"><?php echo "#" . $post['title']; ?></a>
+
+            <a href="" class="hashtag"><?php echo "#"  ?></a>
+
             <p class="date"><?php echo $post['date']; ?></p>
             <form action="">
                 <input type="text" placeholder="Add comment" class="comment_field">

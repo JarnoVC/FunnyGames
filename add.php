@@ -3,31 +3,39 @@
 include_once(__DIR__ . "/classes/Post.php");
 include_once(__DIR__ . "/classes/Db.php");
 
+
 if (!empty($_POST)) {
-    $error_img = "";
+    $error_img_size = "";
     $fileSize = $_FILES['image']['size'];
-
-    try {
-
-        if ($fileSize < 1000000) {
-            $post = new Post();
-            $post->setImage($_FILES['image']['name']);
-            $post->setDescription($_POST['description']);
-            $post->setHashtag($_POST['hashtag']);
-
-            $post->save();
-            $post->hashtag();
-    
-        } else {
-            $error_img = "Image size is too big. Pick another one";
-        }
-    } catch (\Throwable $th) {
-        $error = $th->getMessage();
-    }
-
 
     $target = "posts/" . basename($_FILES['image']['name']);
     move_uploaded_file($_FILES['image']['tmp_name'], $target);
+
+    if (empty($_POST['description']) || empty($_FILES['image']['name'])) {
+    } else {
+        header('Location: index.php');
+    }
+
+    $post = new Post();
+    try {
+        $post->setDescription($_POST['description']);
+    } catch (\Throwable $th) {
+        $error_empty_desc = $th->getMessage();
+    }
+
+    $post->setHashtag($_POST['hashtag']);
+
+    if ($fileSize < 1000000) {
+        try {
+            $post->setImage($_FILES['image']['name']);
+        } catch (\Throwable $th) {
+            $error_empty_img = $th->getMessage();
+        }
+    } else {
+        $error_img_size = "Image size is too big. Pick another one";
+    }
+    $post->save();
+    $post->hashtag();
 }
 
 ?>
@@ -57,18 +65,18 @@ if (!empty($_POST)) {
     <?php include 'header.inc.php'; ?>
     <img id="uploadPreview" class="img_preview" />
 
-
-
-
     <form method="post" action="" enctype="multipart/form-data">
         <?php
-        echo '<div class="error error_image">' . $error_img . '</div>';
+        echo '<div class="error error_image">' . $error_img_size . '</div>';
         ?>
+        <?php if (isset($error_empty_img)) : ?>
+            <div class="error error_emp_img"><?php echo $error_empty_img; ?></div>
+        <?php endif; ?>
         <div>
             <input type='file' name="image" class="btn_add_pic" id="uploadImage" onchange="PreviewImage();">
         </div>
-        <?php if (isset($error)) : ?>
-            <div class="error error_desc"><?php echo $error; ?></div>
+        <?php if (isset($error_empty_desc)) : ?>
+            <div class="error error_emp_desc"><?php echo $error_empty_desc; ?></div>
         <?php endif; ?>
         <div>
             <textarea name="description" placeholder="Write caption..." class="caption_text textarea"></textarea>

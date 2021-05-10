@@ -44,7 +44,6 @@
     font-family: "first-job";
     font-size: 4vw;
 }
-
 .img_preview {
     width: 93vw;
     height: 93vw;
@@ -91,6 +90,8 @@
         padding: 1.5vw 2vw 1.5vw 2vw;
         font-size: 1.3em;
         resize: none;
+        white-space: nowrap;
+        overflow-y: hidden;
     }
     .btn_add_pic {
         margin-bottom: 3vw;
@@ -120,9 +121,13 @@
         font-size: 80%;
         color: #dc3545;
     }
-    .error_desc {
+    .error_emp_desc {
         left: 46vw;
         top: 28.5vw;
+    }
+    .error_emp_img {
+        left: 17.5vw;
+        top: 40vw;
     }
     .error_image {
         left: 17.5vw;
