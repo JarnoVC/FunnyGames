@@ -28,7 +28,7 @@ $amount_post = 0;
 
 <body>
 
-    <?php foreach (array_reverse($post) as $post) : ?>
+    <?php foreach (array_reverse($post) as $key => $post) : ?>
 
         <?php
         $amount_post++;
@@ -37,7 +37,9 @@ $amount_post = 0;
         }
         ?>
         <div class='one_post'>
-            <img src="<?php echo 'posts/' . $post['image'] ?>">
+            <a href="detailpage.php?p=<?php echo $key; ?>">
+                <img src="<?php echo 'posts/' . $post['image'] ?>">
+            </a>
             <p> <?php echo $post['description']; ?></p>
 
             <a href="" class="hashtag"><?php echo "#"  ?></a>
