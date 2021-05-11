@@ -1,7 +1,7 @@
 <?php 
 
-include_once('database.php');
-include_once('user.php');
+include_once(__DIR__ . "/classes/User.php");
+include_once(__DIR__ . "/classes/Database.php");
 
 $user = new User();
 $data = $user->getUsers();
@@ -21,10 +21,9 @@ $key = $_GET['p'];
     <title>joe</title>
 </head>
 <body>
-<div class="profielfoto">
     <img src='images/<?php echo $data[$key]['profile_picture']; ?>'> 
     <?php echo $data[$key]['username']; ?>
-</div>
+
     <?php echo $data[$key]['bio']; ?>
     <?php echo $data[$key]['email']; ?>
 
