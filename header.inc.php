@@ -97,12 +97,54 @@
         }
     }
 </style>
+    
+<?php 
+include_once(__DIR__ . "/classes/Database.php");
+
+$conn = Db::Connection();
+
+if (isset($_POST["submit"])) {
+    $str = $_POST["search"];
+    $sth = $conn->prepare("SELECT * FROM 'user' WHERE username = '$str'");
+
+    $sth->setFetchMode(PDO::FETCH_OBJ);
+    $sth->execute();
+
+    var_dump($sth);
+
+    if($row = $sth->fetch())
+    {
+        ?>
+        <br><br><br>
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td><?php echo $row->username; ?></td>
+            </tr>
+        </table>
+    <?php 
+    }
+    
+    else {
+        echo "Name does not exist";
+    }
+}
+?>
+    
 <header>
     <div class="header">
         <a href="index.php">
             <div class="logo_img"></div>
         </a>
-        <input type="text" placeholder="Search..." class="searchbar">
+        
+        <form method="post">
+            <label for="search"></label>
+            <input type="text" placeholder="Search..." class="searchbar" name="search">
+            <input type="submit" name="submit"> 
+        </form>
+        
         <a href="profile.php">
             <div class="profile_btn"></div>
         </a>
