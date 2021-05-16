@@ -125,7 +125,7 @@ class Post
         return $this;
     }
 
-    public function post_hash()
+    /* public function post_hash()
     {
         $conn = DB::Connection();
         $statement = $conn->prepare('INSERT INTO post_hashtag (hashtag_id, post_id) values (:hashtag_id, :post_id)');
@@ -137,7 +137,7 @@ class Post
         $statement->bindValue(":post_id", $post_id);
         $result = $statement->execute();
         return $result;
-    }
+    }*/
 
 
     public function save()
@@ -179,9 +179,7 @@ class Post
     public static function getAll()
     {
         $conn = DB::Connection();
-
         $statement = $conn->prepare("SELECT * from post");
-
         $statement->execute();
         $post = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $post;

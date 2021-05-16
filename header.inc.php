@@ -96,9 +96,26 @@
             margin-right: 2vw;
         }
     }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #2E3F72;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #272357;
+        ;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #726DAB;
+    }
 </style>
-    
-<?php 
+
+<?php
 include_once(__DIR__ . "/classes/Database.php");
 
 $conn = Db::Connection();
@@ -112,9 +129,8 @@ if (isset($_POST["submit"])) {
 
     var_dump($sth);
 
-    if($row = $sth->fetch())
-    {
-        ?>
+    if ($row = $sth->fetch()) {
+?>
         <br><br><br>
         <table>
             <tr>
@@ -124,27 +140,25 @@ if (isset($_POST["submit"])) {
                 <td><?php echo $row->username; ?></td>
             </tr>
         </table>
-    <?php 
-    }
-    
-    else {
+<?php
+    } else {
         echo "Name does not exist";
     }
 }
 ?>
-    
+
 <header>
     <div class="header">
         <a href="index.php">
             <div class="logo_img"></div>
         </a>
-        
+
         <form method="post">
             <label for="search"></label>
             <input type="text" placeholder="Search..." class="searchbar" name="search">
-            <input type="submit" name="submit"> 
+            <input type="submit" name="submit">
         </form>
-        
+
         <a href="profile.php">
             <div class="profile_btn"></div>
         </a>

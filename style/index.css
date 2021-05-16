@@ -44,6 +44,10 @@ p {
 }
 
 @media screen and (min-width: 1000px) {
+    .username {
+        font-family: "first-job";
+        font-size: x-large;
+    }
     img {
         width: 25vw;
         height: 25vw;
@@ -67,18 +71,16 @@ p {
         width: 98vw;
     }
     .date {
-        font-size: 0.7vw;
+        color: rgb(99, 99, 99);
     }
     .one_post {
-        margin-bottom: 8vw;
+        margin-bottom: 0vw;
+        height: 40vw;
     }
     .comment_field {
         width: 26vw;
         resize: none;
-        float: right;
         position: relative;
-        top: 0vw;
-        left: -21vw;
         padding: 1vw 0vw 1vw 2vw;
         border-radius: 5px;
         background-color: rgba(255, 255, 255, 0.36);
@@ -86,5 +88,76 @@ p {
     }
     .comment_field::placeholder {
         color: rgba(255, 255, 255, 0.496);
+    }
+    #btn_add_comment {
+        color: white;
+        font-family: "first-job";
+        text-decoration: none;
+        position: relative;
+        top: 0.5vw;
+        left: 1.8vw;
+        font-size: 1vw;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    #btn_add_comment:hover {
+        text-decoration: underline;
+    }
+    .vl {
+        border-left: 1px solid white;
+        position: relative;
+        height: 2vw;
+        left: 22vw;
+        top: -2.5vw;
+    }
+    ul.list_comments {
+        font-family: 'Montserrat', sans-serif;
+        left: -1vw;
+        top: -1vw;
+        position: absolute;
+        list-style: none;
+    }
+    .area_comments {
+        width: 28vw;
+        height: 22vw;
+        position: relative;
+        top: -80px;
+        overflow: auto;
+    }
+    .hl {
+        border-bottom: 1px solid white;
+        position: relative;
+        top: 20vw;
+        width: 28vw;
+    }
+    div.date_comment {
+        margin-bottom: 1.5vw;
+    }
+    .likes {
+        font-family: 'Montserrat', sans-serif;
+        position: relative;
+        top: 21vw;
+        width: 28vw;
+    }
+    a.like_btn {
+        background-image: url(../illustrations/heart.svg);
+        background-repeat: no-repeat;
+        color: #26376d00;
+        font-size: 1.1vw;
+        margin-right: 1vw;
+    }
+    a.like_btn:hover {
+        background-image: url(../illustrations/heart_selected.svg);
+        background-repeat: no-repeat;
+        color: #26376d00;
+        font-size: 1.1vw;
+        margin-right: 1vw;
+    }
+    .post_right_side {
+        position: relative;
+        left: 49vw;
+        top: -23vw;
+      
     }
 }
