@@ -71,7 +71,7 @@ p {
         width: 98vw;
     }
     .date {
-        color: rgb(99, 99, 99);
+        color: #5671A2;
     }
     .one_post {
         margin-bottom: 0vw;
@@ -158,6 +158,5 @@ p {
         position: relative;
         left: 49vw;
         top: -23vw;
-      
     }
 }

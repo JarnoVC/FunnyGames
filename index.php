@@ -9,12 +9,8 @@ include 'header.inc.php';
 $post = Post::getAll();
 $amount_post = 0;
 
-$timeAgo = new Ago();
-
-//$Comment_posted_at = "2021-05-16 00:01:16";
-$timestamp = $timeAgo->convertToTimestamp($Comment_posted_at);
-
-
+$dateAgo = new Ago();
+$commentAgo = new Ago();
 ?>
 
 <!DOCTYPE html>
@@ -30,51 +26,62 @@ $timestamp = $timeAgo->convertToTimestamp($Comment_posted_at);
 </head>
 
 <body>
-
     <?php foreach (array_reverse($post) as $key => $post) : ?>
         <?php
         $amount_post++;
         if ($amount_post > 20) { // als meer dan 20 posts op feed,
             break; //break
+
         }
         ?>
-        <div class="one_post post" id="post">
-            <p href="#" class="username">Username</p>
-            <!-- Image post, description, hashtag en timestamp post -->
-            <a href="detailpage.php?p=<?php echo $key; ?>">
-                <img src="<?php echo 'posts/' . $post['image'] ?>">
-            </a>
-            <p> <?php echo $post['description']; ?></p>
-            <a href="" class="hashtag"><?php echo "#"  ?></a>
-            <p class="date"><?php echo $post['date']; ?></p>
+        <div id="commentquery">
+            <div class="one_post post" id="post">
+                <p href="#" class="username">Username</p>
+                <!-- Image post, description, hashtag en timestamp post -->
+                <a href="detailpage.php?p=<?php echo $key; ?>">
+                    <img src="<?php echo 'posts/' . $post['image'] ?>">
+                </a>
+                <p> <?php echo $post['description']; ?></p>
+                <a href="" class="hashtag"><?php echo "#" . $post['hashtag'] ?></a>
+                <?php date_default_timezone_set('Europe/Brussels'); ?>
+                <?php $curenttime = ($post['date']); ?>
+                <!-- timestamp post is geplaatst in databank -->
+                <?php $time_ago = strtotime($curenttime); ?>
+                <!-- timestamp omgezet naar ... ago (met function timeAgo) -->
+                <p class="date"><?php echo $dateAgo->timeAgo($time_ago); ?></p> <!-- echo ... ago -->
 
-            <!-- comments en likes post -->
-            <div class="post_right_side">
-                <div class="hl"></div>
-                <!-- likes -->
-                <div class="likes">
-                    <a href="#" class="like_btn">like</a>
-                    <span id="likes_counter">0</span> people liked this post.
-                </div>
-                <!-- comment foreach -->
-                <div class="area_comments">
-                    <ul class="list_comments">
-                        <?php $allComments = Comment::getPostId($post['id']); ?>
-                        <?php foreach ($allComments as $c) : ?>
-                            <li>
-                                <?php echo htmlspecialchars($c['comment']); ?>
-                                <div class="date date_comment"><?php echo $c['date']; ?></div>
-                            </li>
-                        <?php endforeach ?>
-                    </ul>
-                </div>
-                <!-- comment inputfield en comment btn -->
-                <form method="post" action="">
+                <!-- comments en likes post -->
+                <div class="post_right_side">
+                    <div class="hl"></div>
+                    <!-- likes -->
+                    <div class="likes">
+                        <a href="#" class="like_btn">like</a>
+                        <span id="likes_counter">0</span> people liked this post.
+                    </div>
+
+                    <!-- comment foreach -->
+
+                    <div class="area_comments">
+                        <div class="empty"></div>
+                        <ul class="list_comments">
+                            <?php $allComments = Comment::getPostId($post['id']); ?>
+                            <?php foreach ($allComments as $c) : ?>
+                                <li>
+                                    <?php echo htmlspecialchars($c['comment']); ?>
+                                    <?php $curenttime = ($c['date']); ?>
+                                    <?php $time_ago = strtotime($curenttime); ?>
+                                    <div class="date date_comment"><?php echo $dateAgo->timeAgo($time_ago); ?></div>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
+                    <!-- comment inputfield en comment btn -->
                     <input type="text" placeholder="Add comment" class="comment_field" id="comment_text">
+
                     <div class="vl">
                         <button type="submit" id="btn_add_comment" data-post_id="<?php echo $post["id"] ?>">Post</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     <?php endforeach; ?>

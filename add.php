@@ -5,27 +5,27 @@ include_once(__DIR__ . "/classes/Db.php");
 
 
 if (!empty($_POST)) {
+    $post = new Post();
     $error_img_size = "";
     $fileSize = $_FILES['image']['size'];
 
     $target = "posts/" . basename($_FILES['image']['name']);
     move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
-    if (empty($_POST['description']) || empty($_FILES['image']['name'])) {
-    } else {
-        header('Location: index.php');
-    }
-
-    $post = new Post();
-    try {
-        $post->setDescription($_POST['description']);
-    } catch (\Throwable $th) {
-        $error_empty_desc = $th->getMessage();
-    }
-
-    $post->setHashtag($_POST['hashtag']);
-
     if ($fileSize < 1000000) {
+        if (empty($_POST['description']) || empty($_FILES['image']['name'])) {
+        } else {
+            header('Location: index.php');
+        }
+        try {
+            $post->setDescription($_POST['description']);
+        } catch (\Throwable $th) {
+            $error_empty_desc = $th->getMessage();
+        }
+
+        $post->setHashtag($_POST['hashtag']);
+
+
         try {
             $post->setImage($_FILES['image']['name']);
         } catch (\Throwable $th) {

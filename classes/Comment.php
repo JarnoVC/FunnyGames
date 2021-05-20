@@ -94,7 +94,6 @@ class Comment
 
         $comment = $this->getComment();
         $post_id = $this->getPost_id();
-        $_SESSION['id'] = $this->getUser_id();
 
         $statement->bindValue(":comment", $comment);
         $statement->bindValue(":post_id", $post_id);

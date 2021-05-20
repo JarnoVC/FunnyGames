@@ -95,6 +95,10 @@
             top: -2.8vw;
             margin-right: 2vw;
         }
+
+        .search_btn {
+            position: absolute;
+        }
     }
 
     ::-webkit-scrollbar {
@@ -156,7 +160,7 @@ if (isset($_POST["submit"])) {
         <form method="post">
             <label for="search"></label>
             <input type="text" placeholder="Search..." class="searchbar" name="search">
-            <input type="submit" name="submit">
+            <input type="submit" name="submit" class="search_btn">
         </form>
 
         <a href="profile.php">
