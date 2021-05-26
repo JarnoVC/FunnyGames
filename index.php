@@ -48,7 +48,7 @@ $dateAgo = new Ago();
                     <img src="<?php echo 'posts/' . $post['image'] ?>">
                 </a>
                 <p> <?php echo $post['description']; ?></p>
-                <a href="" class="hashtag"><?php echo "#" . $post['hashtag'] ?></a>
+                <a href="" class="hashtag"><?php echo "#"?></a>
                 <?php date_default_timezone_set('Europe/Brussels'); ?>
                 <?php $curenttime = ($post['date']); ?>
                 <!-- timestamp post is geplaatst in databank -->
