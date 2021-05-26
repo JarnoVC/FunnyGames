@@ -237,6 +237,63 @@ class User{
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
+    
+     public static function UserData($id){
+        $conn = Db::Connection();
+        $statement = $conn->prepare("SELECT * FROM user WHERE id = :id");
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
+
+    }
+
+    public function checkBio($email)
+    {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('SELECT bio FROM user WHERE  email = :email ');
+        $statement->bindvalue(':email', $email);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        if (empty($user)) {
+            return false;
+            
+        } else {
+            return true;
+        }
+    }
+
+    public function changeProfilePicture($image, $email) {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('UPDATE user SET profile_picture = :image WHERE email = :email');
+        $statement->bindValue(':image', $image);
+        $statement->bindValue(':email', $email);
+        $statement->execute();
+    }
+
+    public function changeUsername($username, $email) {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('UPDATE user SET username = :username WHERE email = :email');
+        $statement->bindValue(':username', $username);
+        $statement->bindValue(':email', $email);
+        $statement->execute();
+    }
+
+    public function changeEmail($newEmail, $oldEmail) {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('UPDATE user SET email = :newEmail WHERE email = :oldEmail');
+        $statement->bindValue(':newEmail', $newEmail);
+        $statement->bindValue(':oldEmail', $oldEmail);
+        $statement->execute();
+    }
+
+    public function updateBio($bio, $email) {
+        $conn = DB::Connection();
+        $statement = $conn->prepare('UPDATE user SET bio = :bio WHERE email = :email');
+        $statement->bindValue(':bio', $bio);
+        $statement->bindValue(':email', $email);
+        $statement->execute();
+    }
 
     
 }
