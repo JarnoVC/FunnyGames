@@ -18,6 +18,6 @@ if (!empty($_POST['comment'])) {
         'message' => 'comment saved'
     ];
 
-    header('Content-Type: application/json'); //hier komt json terug (vb comment toevoegen in lijst), niet html
-    echo json_encode($response); // encoderen naar json
+    header('Content-Type: application/json');
+    echo json_encode($response); 
 }

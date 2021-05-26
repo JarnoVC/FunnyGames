@@ -6,17 +6,17 @@ include_once(__DIR__ . "/classes/Comment.php");
 
 include 'header.inc.php';
 
-session_start();
+/*session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('location: login.php');
     exit();
-}
+}*/
 
 $post = Post::getAll();
 $amount_post = 0;
 
 $dateAgo = new Ago();
-$commentAgo = new Ago();
+
 ?>
 
 <!DOCTYPE html>

@@ -131,8 +131,12 @@ p {
         top: 20vw;
         width: 28vw;
     }
-    div.date_comment {
+    .date {
+        color: #5671A2;
+    }
+    .date_comment {
         margin-bottom: 1.5vw;
+        color: #5671A2;
     }
     .likes {
         font-family: 'Montserrat', sans-serif;
