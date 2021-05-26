@@ -6,11 +6,14 @@ include_once(__DIR__ . "/classes/Comment.php");
 
 include 'header.inc.php';
 
-/*session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('location: login.php');
-    exit();
-}*/
+session_start();
+
+if (!isset($_SESSION["id"])) {
+    header("Location: login.php");
+} else {
+    $id = $_SESSION["id"];
+}
+
 
 $post = Post::getAll();
 $amount_post = 0;
@@ -48,7 +51,7 @@ $dateAgo = new Ago();
                     <img src="<?php echo 'posts/' . $post['image'] ?>">
                 </a>
                 <p> <?php echo $post['description']; ?></p>
-                <a href="" class="hashtag"><?php echo "#"?></a>
+                <a href="" class="hashtag"><?php echo "#" ?></a>
                 <?php date_default_timezone_set('Europe/Brussels'); ?>
                 <?php $curenttime = ($post['date']); ?>
                 <!-- timestamp post is geplaatst in databank -->
