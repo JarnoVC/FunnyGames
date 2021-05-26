@@ -1,89 +1,73 @@
 <?php
-/*
     include_once(__DIR__ . "/classes/User.php");
-    include_once(__DIR__. "classes/Database.php");
-    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    include_once(__DIR__. "/classes/Database.php");
+    /*if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header('location: login.php');
         exit;
     }*/
 
-// Create database connection
-$db = mysqli_connect("localhost", "root", "", "funnygames");
-$id = "";
-
-
-// Initialize the session
-session_start();
-
-// Check if the user is logged in, if not then redirect him to login page
-/*if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-            header("location: login.php");
-            exit;
-        }*/
-
-// Initialize message variable
-$msg = "";
-
-// If upload button is clicked ...
-if (isset($_POST['upload'])) {
-    // Get image name
-    $image = $_FILES['image']['name'];
-
-    // image file directory
-    $target = "images/" . basename($image);
-
-    $sql = "UPDATE user SET profile_picture='$image' where id=$id";
-    // execute query
-    mysqli_query($db, $sql);
-
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        $msg = "Image uploaded successfully";
+    // Initialize the session
+    session_start();
+    if (!isset($_SESSION['id'])) {
+        header('location: login.php');
     } else {
-        $msg = "Failed to upload image";
+        $sessionId = $_SESSION['id'];
+        $userData = User::UserData($sessionId);
+        //echo "dag " . $userData['firstname'] . " met id: " . $_SESSION['id'];
     }
-}
 
-if (isset($_POST['post'])) {
+    $user = new User();
+    $username = $userData['username'];
+    
+    $email = $userData['email'];
+    if ($user->checkBio($email) === true) {
+        $bio = $userData['bio'];
+    } else {
+        $bio = "Post a bio here";
+    }
+    if (isset($_POST['upload'])) {
+        $image = $_FILES['image']['name'];
+        $target = "images/".basename($image);
+        $user->changeProfilePicture($image, $userData['email']);
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+            $msg = "Image uploaded successfully";
+        }else{
+            $msg = "Failed to upload image";
+        }
+    }
 
-    // Get text
-    $image_text = mysqli_real_escape_string($db, $_POST['image_text']);
+    if (isset($_POST['set_username'])) {
+        $username = $_POST['username'];
+        if ($user->validateUsername($username)) {
+            $errorusername = "Username is already taken";
+            $username = $userData['username'];
+        } else  {
+            $user->changeUsername($username, $userData['email']);
+        }
+        
+    }
 
-    $sql = "UPDATE user SET bio='$image_text' where id=$id";
-    // execute query
-    mysqli_query($db, $sql);
-}
+    if (isset($_POST['post'])) {
+        $user->setBio($_POST['image_text']);
+        //echo $user->getBio();
+        $user->updateBio($user->getBio(), $userData['email']);
+        $bio = $userData['bio'];
+    }
 
-if (isset($_POST['delete'])) {
-
-
-    $image_text = mysqli_real_escape_string($db, $_POST['image_text']);
-
-    $sql = "UPDATE user SET bio='' where id=$id";
-
-    mysqli_query($db, $sql);
-}
-
-if (isset($_POST['change_email'])) {
-
-
-    $email = mysqli_real_escape_string($db, $_POST['email_text']);
-
-    $sql = "UPDATE user SET email='$email' where id=$id";
-
-    mysqli_query($db, $sql);
-}
-
-if (isset($_POST['set_username'])) {
-
-
-    $username = mysqli_real_escape_string($db, $_POST['username']);
-
-    $sql = "UPDATE user SET username='$username' where id=$id";
-
-    mysqli_query($db, $sql);
-}
-
-$result = mysqli_query($db, "SELECT * FROM user");
+    if (isset($_POST['change_email'])) {
+        $newEmail = $_POST['email_text'];
+        $email = $_POST['email_text'];
+        if ($user->validateEmail($newEmail)) {
+            $errorEmail = "Email is already taken";
+            $newEmail = $userData['email'];
+        } else  {
+            $user->changeEmail($newEmail, $userData['email']);
+            $email = $userData['email'];
+        }
+        
+        //$email = $userData['email'];
+    }   
+    //$email = $userData['email']; 
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,36 +82,29 @@ $result = mysqli_query($db, "SELECT * FROM user");
 <body>
     <?php include 'header.inc.php'; ?>
     <div id="content">
-        <?php
-
-        $db = mysqli_connect("localhost", "root", "", "funnygames");
-        $sql = "SELECT * FROM user";
-        $result = mysqli_query($db, $sql);
-
-        while ($row = mysqli_fetch_array($result)) {
-            echo "<div id='img_div'>";
-            echo "<img src='images/" . $row['profile_picture'] . "' >";
-            echo "<p>" . $row['bio'] . "</p>";
-            echo "</div>";
-        }
-
-
+        <?php 
+            if (isset($image)) {
+                echo "<div id='img_div'>";
+                echo "<img src='images/".$userData['profile_picture']."' >";
+                echo "</div>"; 
+            }
+            
         ?>
+
         <form method="POST" action="index.php" enctype="multipart/form-data">
             <input type="text" name="username" placeholder="gebruikersnaam wijzigen">
 
-            <?php
-            $db = mysqli_connect("localhost", "root", "", "funnygames");
-            $sql = "SELECT * FROM user";
-            $result = mysqli_query($db, $sql);
-
-            while ($row = mysqli_fetch_array($result)) {
-
+            <?php 
                 echo "<div id='username'>";
-                echo "<p> huidige gebruikersnaam: <br><b>" . $row['username'] . "</b></p>";
+                echo "<p> huidige gebruikersnaam: <br><b>".$username."</b></p>";
                 echo "</div>";
-            }
+                if (isset($errorusername)) {
+                    echo "<span class='invalid-feedback'><?php echo $errorusername; ?></span>";
+                }
             ?>
+            <?php if (isset($errorusername)) : ?>
+                <span class="invalid-feedback"><?php echo $errorusername; ?></span>
+            <?php endif; ?>
 
             <div>
                 <button id="username_button" type="submit" name="set_username">OPSLAAN</button>
@@ -141,7 +118,7 @@ $result = mysqli_query($db, "SELECT * FROM user");
             </div>
 
             <div>
-                <textarea id="text" cols="40" rows="4" name="image_text" placeholder="Say something about this image..."></textarea>
+                <textarea id="text" cols="40" rows="4" name="image_text" placeholder='<?php echo $bio ?>'></textarea>
             </div>
             <div>
                 <button id="post_bio" type="submit" name="post">POST</button>
@@ -152,19 +129,12 @@ $result = mysqli_query($db, "SELECT * FROM user");
             <div>
                 <input type="email" name="email_text" placeholder="verander email">
             </div>
-            <?php
-            $db = mysqli_connect("localhost", "root", "", "funnygames");
-            $sql = "SELECT * FROM user";
-            $result = mysqli_query($db, $sql);
-
-            while ($row = mysqli_fetch_array($result)) {
-
-                echo "<div id='email'>";
-                echo "<p> huidige email: <br><b>" . $row['email'] . "</b></p>";
-                echo "</div>";
-            }
-
-            ?>
+            <?php 
+            echo "<div id='username'>";
+            echo "<p> huidige email: <br><b>".$email."</b></p>";
+            echo "</div>";
+                 
+        ?>
 
 
             <div>
