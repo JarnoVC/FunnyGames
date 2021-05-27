@@ -14,6 +14,7 @@ class Post
     private $image;
     private $description;
     private $hashtag;
+    private $user_id;
 
     //GETTERS EN SETTERS//
 
@@ -63,6 +64,25 @@ class Post
 
         $this->description = $description;
     }
+    /**
+     * Get the value of user_id
+     */
+    public function getUser_id()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set the value of user_id
+     *
+     * @return  self
+     */
+    public function setUser_id($user_id)
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
 
 
     /**
@@ -100,14 +120,25 @@ class Post
 
         $image = $this->getImage();
         $description = $this->getDescription();
+        $user_id = $this->getUser_id();
 
         $statement->bindValue(":image", $image);
         $statement->bindValue(":description", $description);
-        $statement->bindValue(":user_id", $_SESSION['id']);
+        $statement->bindValue(":user_id", $user_id);
 
 
         $result = $statement->execute();
         return $result;
+    }
+
+    public function getCorrectUser($post_id)
+    {
+        $conn = DB::Connection();
+        $statement = $conn->prepare("SELECT * FROM user INNER JOIN post ON user.id = post.user_id WHERE post.id = :post_id");
+        $statement->bindValue(':post_id', $post_id);
+        $statement->execute();
+        $username = $statement->fetch(PDO::FETCH_ASSOC);
+        return $username;
     }
 
     public function hashtag()

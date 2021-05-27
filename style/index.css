@@ -64,6 +64,13 @@ p {
         left: 22vw;
         width: 98vw;
     }
+    .username_link {
+        text-decoration: none;
+        color: white;
+    }
+    .username_comment {
+        font-family: "first-job";
+    }
     .hashtag {
         position: relative;
         top: 4.5vw;

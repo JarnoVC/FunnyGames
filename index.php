@@ -3,15 +3,16 @@ include_once(__DIR__ . "/classes/Post.php");
 include_once(__DIR__ . "/classes/User.php");
 include_once(__DIR__ . "/classes/TimeAgo.php");
 include_once(__DIR__ . "/classes/Comment.php");
+include_once(__DIR__ . "/classes/Database.php");
 
 include 'header.inc.php';
 
-session_start();
 
 if (!isset($_SESSION["id"])) {
     header("Location: login.php");
 } else {
-    $id = $_SESSION["id"];
+    $email = $_SESSION["id"];
+    $correct_data = User::getIDFromEmail($email);
 }
 
 
@@ -19,6 +20,11 @@ $post = Post::getAll();
 $amount_post = 0;
 
 $dateAgo = new Ago();
+
+$user = new User();
+$data = $user->getUsers();
+
+$newPost = new Post;
 
 ?>
 
@@ -45,11 +51,13 @@ $dateAgo = new Ago();
         ?>
         <div id="commentquery">
             <div class="one_post post" id="post">
-                <p href="#" class="username">Username</p>
-                <!-- Image post, description, hashtag en timestamp post -->
-                <a href="detailpage.php?p=<?php echo $key; ?>">
-                    <img src="<?php echo 'posts/' . $post['image'] ?>">
+                <a href="#" class="username_link">
+                    <p class="username"> <?php echo $newPost-> getCorrectUser($post['id'])['username']; ?></p>
                 </a>
+                <!-- Image post, description, hashtag en timestamp post -->
+
+                <img src="<?php echo 'posts/' . $post['image'] ?>">
+
                 <p> <?php echo $post['description']; ?></p>
                 <a href="" class="hashtag"><?php echo "#" ?></a>
                 <?php date_default_timezone_set('Europe/Brussels'); ?>
@@ -76,6 +84,7 @@ $dateAgo = new Ago();
                             <?php $allComments = Comment::getPostId($post['id']); ?>
                             <?php foreach ($allComments as $c) : ?>
                                 <li>
+                                    <a class="username_link username_comment"> <?php echo htmlspecialchars($c['username']); ?></a>
                                     <?php echo htmlspecialchars($c['comment']); ?>
                                     <?php $curenttime = ($c['date']); ?>
                                     <?php $time_ago = strtotime($curenttime); ?>

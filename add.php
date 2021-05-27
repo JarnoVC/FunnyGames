@@ -2,6 +2,16 @@
 
 include_once(__DIR__ . "/classes/Post.php");
 include_once(__DIR__ . "/classes/Db.php");
+include_once(__DIR__ . "/classes/User.php");
+
+session_start();
+
+if (!isset($_SESSION["id"])) {
+    header("Location: login.php");
+} else {
+    $email = $_SESSION["id"];
+    $correct_data = User::getIDFromEmail($email);
+}
 
 
 if (!empty($_POST)) {
@@ -24,6 +34,7 @@ if (!empty($_POST)) {
         }
 
         $post->setHashtag($_POST['hashtag']);
+        $post->setUser_id($email);
 
 
         try {

@@ -94,10 +94,11 @@ class Comment
 
         $comment = $this->getComment();
         $post_id = $this->getPost_id();
+        $user_id = $this->getUser_id();
 
         $statement->bindValue(":comment", $comment);
         $statement->bindValue(":post_id", $post_id);
-        $statement->bindValue(":user_id", $_SESSION['id']);
+        $statement->bindValue(":user_id", $user_id);
 
         $result = $statement->execute();
         return $result;
@@ -106,8 +107,8 @@ class Comment
     public static function getPostId($post_id)
     {
         $conn = DB::Connection();
-        $statement = $conn->prepare('SELECT * from comments where post_id = :post_id');
-        $statement->bindValue(':post_id', $post_id);
+        $statement = $conn->prepare('SELECT * FROM user INNER JOIN comments ON user.id = comments.user_id WHERE post_id = :post_id');
+        $statement->bindValue(":post_id", $post_id);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
