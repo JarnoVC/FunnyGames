@@ -140,6 +140,15 @@ class Post
         $username = $statement->fetch(PDO::FETCH_ASSOC);
         return $username;
     }
+    public function getCorrectPost($user_id)
+    {
+        $conn = DB::Connection();
+        $statement = $conn->prepare("SELECT * FROM post WHERE user_id = :user_id");
+        $statement->bindValue(':user_id', $user_id);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     public function hashtag()
     {

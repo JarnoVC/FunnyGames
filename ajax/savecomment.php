@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once(__DIR__ . "/../classes/Comment.php");
-include_once(__DIR__ . "/Database.php");
+
 
 if (!empty($_POST['comment'])) {
 

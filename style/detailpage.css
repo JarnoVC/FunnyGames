@@ -1,0 +1,35 @@
+@font-face {
+    font-family: "first-job";
+    src: url(../fonts/FirstJob-X8rP.ttf);
+}
+
+.username {
+    font-family: "first-job";
+    color: white;
+    text-align: center;
+    margin-top: 4vw;
+    font-size: 3vw;
+}
+
+.s_profile {
+    color: white;
+    text-align: center;
+    margin-top: 4vw;
+    font-size: 2vw;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.posts {
+    width: 25vw;
+    height: 25vw;
+    object-fit: cover;
+    float: left;
+    margin-right: 3vw;
+    margin-bottom: 3vw;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.contain_img {
+    margin-left: 22.7vw;
+}

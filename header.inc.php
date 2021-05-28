@@ -85,19 +85,21 @@
         .add_btn {
             width: 3vw;
             height: 3vw;
-            top: -2.8vw;
+            top: -4vw;
             margin-right: 2vw;
         }
 
         .profile_btn {
             width: 3vw;
             height: 3vw;
-            top: -2.8vw;
+            top: -4vw;
             margin-right: 2vw;
         }
 
         .search_btn {
-            position: absolute;
+            position: relative;
+            top: -2.2vw;
+            right: -65vw;
         }
     }
 
@@ -131,7 +133,7 @@ if (isset($_POST["submit"])) {
     $sth->setFetchMode(PDO::FETCH_OBJ);
     $sth->execute();
 
-    var_dump($sth);
+    // var_dump($sth);
 
     if ($row = $sth->fetch()) {
 ?>
@@ -146,7 +148,7 @@ if (isset($_POST["submit"])) {
         </table>
 <?php
     } else {
-        echo "Name does not exist";
+        //echo "Name does not exist";
     }
 }
 ?>
@@ -160,10 +162,10 @@ if (isset($_POST["submit"])) {
         <form method="post">
             <label for="search"></label>
             <input type="text" placeholder="Search..." class="searchbar" name="search">
-            <input type="submit" name="submit" class="search_btn">
+            <input type="submit" name="submit" class="search_btn" value="search">
         </form>
 
-        <a href="profile.php">
+        <a href="profile_settings.php">
             <div class="profile_btn"></div>
         </a>
         <a href="add.php">

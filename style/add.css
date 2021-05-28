@@ -44,6 +44,7 @@
     font-family: "first-job";
     font-size: 4vw;
 }
+
 .img_preview {
     width: 93vw;
     height: 93vw;
@@ -64,7 +65,7 @@
         border-radius: 5px;
         position: relative;
         left: -20vw;
-        top: -7vw;
+        top: -8vw;
     }
     #uploadImage.btn_add_pic {
         margin-left: 17vw;

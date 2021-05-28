@@ -1,13 +1,14 @@
 <?php
 
-include_once(__DIR__."/Database.php");
+include_once(__DIR__ . "/Database.php");
 
 
-class User{
-    
-    
-    
-    
+class User
+{
+
+
+
+
     private $username;
     private $email;
     private $password;
@@ -16,33 +17,33 @@ class User{
     private $bio;
     private $status;
 
-    private $oldEmail; 
+    private $oldEmail;
     private $newEmail;
     private $newEmailCheck;
-     
 
-    
+
+
 
     /**
      * Set the value of username
      *
      * @return  self
-     */ 
+     */
     public function setUsername($username)
     {
-        
+
         if (empty($username)) {
             throw new Exception("Please fill in a username");
-        } 
+        }
         $this->username = $username;
-        
+
 
         return $this;
     }
 
     /**
      * Get the value of username
-     */ 
+     */
     public function getUsername()
     {
         return $this->username;
@@ -52,21 +53,19 @@ class User{
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         if (empty($email)) {
             throw new Exception("Please fill in an email adress");
-        } 
+        }
         $this->email = $email;
         return $this;
-        
-        
     }
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -76,13 +75,13 @@ class User{
      * Set the value of password
      *
      * @return  self
-     */ 
+     */
     public function setPassword($password)
     {
         $option = [
             'cost' => 12,
         ];
-        
+
         if (empty($password)) {
             throw new Exception("Please fill in a password");
         } elseif (strlen($password) < 8 || strlen($password) > 16) {
@@ -90,45 +89,61 @@ class User{
         }
         $this->password = password_hash($password, PASSWORD_BCRYPT, $option);
         return $this;
-        
-        
     }
 
     /**
      * Get the value of password
-     */ 
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
     /**
+     * Get the value of bio
+     */
+    public function getBio()
+    {
+        return $this->bio;
+    }
+
+    /**
+     * Set the value of bio
+     *
+     * @return  self
+     */
+    public function setBio($bio)
+    {
+        $this->bio = $bio;
+
+        return $this;
+    }
+
+    /**
      * Set the value of confirmpassword
      *
      * @return  self
-     */ 
+     */
     public function setConfirm_password($confirm_password)
     {
         $option = [
             'cost' => 12,
         ];
-        
+
         if (empty($confirm_password)) {
             throw new Exception("Please confirm your password");
-            
         } elseif (strlen($confirm_password) < 8 || strlen($confirm_password) > 16) {
             throw new Exception("Password must be between 8 and 16 characters");
         }
 
         $this->confirm_password = password_hash($confirm_password, PASSWORD_BCRYPT, $option);
-        
+
         return $this;
-        
     }
 
     /**
      * Get the value of confirm_password
-     */ 
+     */
     public function getConfirm_password()
     {
         return $this->confirm_password;
@@ -144,7 +159,6 @@ class User{
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             return true;
-            
         } else {
             return false;
         }
@@ -159,7 +173,6 @@ class User{
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             return true;
-            
         } else {
             return false;
         }
@@ -167,8 +180,8 @@ class User{
     /*functie om de gebruiker te laten registreren*/
     public function register()
     {
-        
-        
+
+
         $conn = DB::Connection();
         $statement = $conn->prepare('INSERT INTO user (email, username, password) values (:email, :username, :password)');
         $email = $this->getEmail();
@@ -182,39 +195,34 @@ class User{
         $statement->bindvalue(":password", $password);
 
         $statement->execute();
-           
     }
     /*functie om de gebruiker in te laten loggen in zijn account*/
     public function login($email, $password)
     {
         $conn = DB::Connection();
         $statement = $conn->prepare('SELECT * FROM user WHERE email = :email');
-        
+
         $statement->bindvalue(':email', $email);
-        
+
         $statement->execute();
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         if ($user === false) {
             echo "nout found";
             return false;
-            
         } else {
             if (password_verify($password, $user['password'])) {
                 echo "succes";
                 return true;
-                
             } else {
                 echo "fail";
                 return false;
-                
             }
         }
-
-        
     }
     /*functie om de ID van een gebruiker te krijgen -> gebruiken
     om de correcte posts weer te geven voor de gebruiker*/
-    public static function getIDFromEmail($email){
+    public static function getIDFromEmail($email)
+    {
         $conn = Db::Connection();
         $statement = $conn->prepare("SELECT id FROM user WHERE email = :email");
         $statement->bindValue(':email', $email);
@@ -223,29 +231,31 @@ class User{
         return $result['id'];
     }
     /*functie om gebruiker na het in te loggen door te verwijzen naar de hoofdpagina*/
-    public function startSession($e) {
+    public function startSession($e)
+    {
         session_start();
         $_SESSION['id'] = $e;
         header('location: index.php');
     }
 
 
-    public function getUsers() {
+    public function getUsers()
+    {
         $conn = DB::Connection();
         $statement = $conn->prepare('SELECT * FROM user');
         $statement->execute();
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-    
-     public static function UserData($id){
+
+    public static function UserData($id)
+    {
         $conn = Db::Connection();
         $statement = $conn->prepare("SELECT * FROM user WHERE id = :id");
         $statement->bindValue(':id', $id);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result;
-
     }
 
     public function checkBio($email)
@@ -257,13 +267,13 @@ class User{
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         if (empty($user)) {
             return false;
-            
         } else {
             return true;
         }
     }
 
-    public function changeProfilePicture($image, $email) {
+    public function changeProfilePicture($image, $email)
+    {
         $conn = DB::Connection();
         $statement = $conn->prepare('UPDATE user SET profile_picture = :image WHERE email = :email');
         $statement->bindValue(':image', $image);
@@ -271,7 +281,8 @@ class User{
         $statement->execute();
     }
 
-    public function changeUsername($username, $email) {
+    public function changeUsername($username, $email)
+    {
         $conn = DB::Connection();
         $statement = $conn->prepare('UPDATE user SET username = :username WHERE email = :email');
         $statement->bindValue(':username', $username);
@@ -279,7 +290,8 @@ class User{
         $statement->execute();
     }
 
-    public function changeEmail($newEmail, $oldEmail) {
+    public function changeEmail($newEmail, $oldEmail)
+    {
         $conn = DB::Connection();
         $statement = $conn->prepare('UPDATE user SET email = :newEmail WHERE email = :oldEmail');
         $statement->bindValue(':newEmail', $newEmail);
@@ -287,13 +299,12 @@ class User{
         $statement->execute();
     }
 
-    public function updateBio($bio, $email) {
+    public function updateBio($bio, $email)
+    {
         $conn = DB::Connection();
         $statement = $conn->prepare('UPDATE user SET bio = :bio WHERE email = :email');
         $statement->bindValue(':bio', $bio);
         $statement->bindValue(':email', $email);
         $statement->execute();
     }
-
-    
 }
