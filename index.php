@@ -41,7 +41,7 @@ $newPost = new Post;
 </head>
 
 <body>
-    <?php foreach (array_reverse ($post) as  $post) : ?>
+    <?php foreach (array_reverse($post) as  $post) : ?>
         <?php
         $amount_post++;
         if ($amount_post > 20) { // als meer dan 20 posts op feed,
@@ -51,14 +51,15 @@ $newPost = new Post;
         ?>
         <div id="commentquery">
             <div class="one_post post" id="post">
-                <a href="detailpage.php?id=<?php echo $post['user_id'];?>" class="username_link">
-                    <p class="username"> <?php echo $newPost-> getCorrectUser($post['id'])['username']; ?></p>
+                <a href="detailpage.php?id=<?php echo $post['user_id']; ?>" class="username_link">
+                    <p class="username"> <?php echo $newPost->getCorrectUser($post['id'])['username']; ?></p>
                 </a>
                 <!-- Image post, description, hashtag en timestamp post -->
 
                 <img src="<?php echo 'posts/' . $post['image'] ?>">
 
                 <p> <?php echo $post['description']; ?></p>
+
                 <a href="" class="hashtag"><?php echo "#" ?></a>
                 <?php date_default_timezone_set('Europe/Brussels'); ?>
                 <?php $curenttime = ($post['date']); ?>

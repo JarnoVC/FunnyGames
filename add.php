@@ -32,9 +32,7 @@ if (!empty($_POST)) {
             $error_empty_desc = $th->getMessage();
         }
 
-        $post->setHashtag($_POST['hashtag']);
         $post->setUser_id($email);
-
 
         try {
             $post->setImage($_FILES['image']['name']);
@@ -45,7 +43,6 @@ if (!empty($_POST)) {
         $error_img_size = "Image size is too big. Pick another one";
     }
     $post->save();
-    $post->hashtag();
 }
 
 ?>

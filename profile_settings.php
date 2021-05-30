@@ -9,7 +9,6 @@ if (!isset($_SESSION['id'])) {
 } else {
     $session_id = $_SESSION['id'];
     $userData = User::UserData($session_id);
-    //echo "dag " . $userData['firstname'] . " met id: " . $_SESSION['id'];
 }
 
 $user = new User();
@@ -79,15 +78,11 @@ if (isset($_POST['change_email'])) {
         <form method="POST" action="index.php" enctype="multipart/form-data">
             <div class="img_username">
                 <div id='img_div'>
-                    <img src="images/<?php echo $userData['email']; ?>">
+                    <img src="illustrations/d2b0bf0b5b31b1d36c7edfcaa93ff98c.jpg">
                 </div>
                 <div>
                     <input type="file" name="image" class="input_img">
                 </div>
-                <div id='username'>
-                    <p class="welcome_text">Current username:<span class="username"> <?php echo $username ?></span></p>
-                </div>
-
                 <?php
                 if (isset($errorusername)) {
                     echo "<span class='invalid-feedback'><?php echo $errorusername; ?></span>";
@@ -96,17 +91,15 @@ if (isset($_POST['change_email'])) {
                 <?php if (isset($errorusername)) : ?>
                     <span class="invalid-feedback"><?php echo $errorusername; ?></span>
                 <?php endif; ?>
-                <input type="text" name="username" class="username_input input" placeholder="Change username">
+                <input type="text" name="username" class="username_input input" placeholder=<?php echo $username ?>>
                 <div>
                     <button id="username_button" type="submit" class="btn" name="set_username">Save username</button>
                 </div>
                 <input type="hidden" name="size" value="1000000">
-                <div>
-                    <button id="upload_button" type="submit" class="btn" name="upload">Save profile picture</button>
-                </div>
+
             </div>
             <div>
-                <textarea id="text" cols="40" rows="4" name="image_text" placeholder='<?php echo $bio ?>'></textarea>
+                <textarea id="text" cols="40" rows="4" name="image_text" placeholder="add bio..."></textarea>
             </div>
             <div>
                 <button id="post_bio" type="submit" class="btn" name="post">Save bio</button>
@@ -114,19 +107,17 @@ if (isset($_POST['change_email'])) {
             <div>
                 <button id="delete_bio" type="submit" class="btn_delete" name="delete">Delete bio</button>
             </div>
-
-            <div id='username'>
-                <p>current email: <strong><span class="email"> <?php echo $email ?></span></strong></p>
-            </div>
-
             <div>
-                <input type="email" name="email_text" class="email_input input" placeholder="Change email">
+                <button id="upload_button" type="submit" class="btn" name="upload">Save profile picture</button>
+            </div>
+            <div>
+                <input type="email" name="email_text" class="email_input input" placeholder=<?php echo $email ?>>
             </div>
 
 
 
             <div>
-                <button id="delete_bio" type="submit" class="btn" name="change_email">Save new email</button>
+                <button id="new_mail_btn" type="submit" class="btn" name="change_email">Save new email</button>
             </div>
         </form>
         <div>

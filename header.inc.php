@@ -80,6 +80,7 @@
             position: absolute;
             left: 35vw;
             top: 0vw;
+            width: 200px;
         }
 
         .add_btn {
@@ -99,7 +100,15 @@
         .search_btn {
             position: relative;
             top: -2.2vw;
-            right: -65vw;
+            right: -64vw;
+            background: none;
+            border: none;
+            font-family: "first-job";
+            color: white;
+            font-size: 1vw;
+        }
+        .search_btn:hover{
+            text-decoration: underline;
         }
     }
 
@@ -161,7 +170,7 @@ if (isset($_POST["submit"])) {
 
         <form method="post">
             <label for="search"></label>
-            <input type="text" placeholder="Search..." class="searchbar" name="search">
+            <input type="text" placeholder="Type users, tags or locations" class="searchbar" name="search">
             <input type="submit" name="submit" class="search_btn" value="search">
         </form>
 

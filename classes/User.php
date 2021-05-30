@@ -207,14 +207,11 @@ class User
         $statement->execute();
         $user = $statement->fetch(PDO::FETCH_ASSOC);
         if ($user === false) {
-            echo "nout found";
             return false;
         } else {
             if (password_verify($password, $user['password'])) {
-                echo "succes";
                 return true;
             } else {
-                echo "fail";
                 return false;
             }
         }

@@ -13,7 +13,6 @@ class Post
 {
     private $image;
     private $description;
-    private $hashtag;
     private $user_id;
 
     //GETTERS EN SETTERS//
@@ -115,7 +114,6 @@ class Post
     {
         $conn = DB::Connection();
 
-
         $statement = $conn->prepare('INSERT INTO post (image, description, user_id) values (:image, :description, :user_id)');
 
         $image = $this->getImage();
@@ -125,7 +123,6 @@ class Post
         $statement->bindValue(":image", $image);
         $statement->bindValue(":description", $description);
         $statement->bindValue(":user_id", $user_id);
-
 
         $result = $statement->execute();
         return $result;
@@ -137,8 +134,8 @@ class Post
         $statement = $conn->prepare("SELECT * FROM user INNER JOIN post ON user.id = post.user_id WHERE post.id = :post_id");
         $statement->bindValue(':post_id', $post_id);
         $statement->execute();
-        $username = $statement->fetch(PDO::FETCH_ASSOC);
-        return $username;
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result;
     }
     public function getCorrectPost($user_id)
     {
@@ -147,19 +144,6 @@ class Post
         $statement->bindValue(':user_id', $user_id);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-
-    public function hashtag()
-    {
-        $conn = DB::Connection();
-        $statement = $conn->prepare('INSERT INTO hashtag (title) values (:title)');
-
-        $hashtag = $this->getHashtag();
-
-        $statement->bindValue(":title", $hashtag);
-
-        $result = $statement->execute();
         return $result;
     }
 
@@ -172,14 +156,5 @@ class Post
         $statement->execute();
         $post = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $post;
-    }
-
-    public static function getHash()
-    {
-        $conn = DB::Connection();
-        $statement = $conn->prepare("SELECT * from hashtag");
-        $statement->execute();
-        $hash = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $hash;
     }
 }

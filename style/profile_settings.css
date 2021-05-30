@@ -55,11 +55,12 @@ form div {
 
 a {
     text-decoration: none;
-    color: tomato;
+    color: white;
 }
 
 .img_username {
     margin-bottom: 6vw;
+    margin-top: 7vw;
 }
 
 .username {
@@ -75,6 +76,12 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top: 5vw;
+}
+
+.logout_btn:hover {
+    background-color: tomato;
+    border: 2px solid tomato;
+
 }
 
 .btn_delete {
@@ -93,35 +100,32 @@ a {
     text-decoration: underline;
 }
 
-/*#img_div {
-    width: 20vw;
-    padding: 5px;
-    margin: 15px auto;
-    border: 1px solid #cbcbcb;
-}
-
-#img_div:after {
-    content: "";
-    display: block;
-    clear: both;
-}*/
-
 img {
     float: left;
-    width: 17vw;
-    height: 17vw;
+    width: 19vw;
+    height: 19vw;
     margin-right: 2vw;
+    border-radius: 5px;
 }
 
 .input_img {
     position: absolute;
     left: 26vw;
-    top: 26vw;
+    top: 33.5vw;
 }
 
-#post_bio, #delete_bio {
-    display: inline-block;
-    display: flex;
+#text {
+    margin-top: -3vw;
+    width: 24vw;
+    height: 6vw;
+}
+
+#delete_bio {
+    margin-bottom: 3vw;
+    position: relative;
+    float: right;
+    top: -2vw;
+    left: -7vw;
 }
 
 #email {
@@ -130,5 +134,12 @@ img {
 }
 
 #upload_button {
-    margin-bottom: 40px;
+    margin-bottom: 4vw;
+    width: 19vw;
+}
+
+#new_mail_btn {
+    position: relative;
+    float: right;
+    top: -4vw;
 }
